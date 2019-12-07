@@ -1,3 +1,8 @@
+?*
+  Red-Black-Tree Challenge
+  Eric Rizk
+*/
+
 #include <iostream> 
 template<typename K, typename V>
 class RBTree
@@ -11,7 +16,7 @@ class RBTree
 		V value;
 		btnode *left;
 		btnode *right;
-		size_t *color; 
+		size_t *color;  // pointer to Node Color
 		
 		btnode(const K& k)
 		{
@@ -40,12 +45,14 @@ class RBTree
 
 	};
 	
-	size_t red = 1;
-	size_t black = 0;
-	size_t *rd = &red;
-	size_t *bl = &black;
+	size_t red = 1; // for nodes that are red
+	size_t black = 0; // for nodes that are black
+	size_t *rd = &red; // pointer to red
+	size_t *bl = &black; // pointer to black
 	size_t _size;
-	char const *rr = "Red";
+	
+	//Used in Find Node Color Function
+	char const *rr = "Red"; 
 	char const *bb = "Black";
 	
 	btnode * _data;
@@ -63,18 +70,19 @@ class RBTree
 		clear();
 	}
 
-	const char *NodeColor(const K& key)const
+// --- Find the Color of Node -------------------------------
+	const char *NodeColor(const K& key)const 
 	{
 		btnode *p = _data;
 		
 		while(p != nullptr)
 		{
-			if(key == p->key)
+			if(key == p->key) // if key matchs
 			{
-				if(p->color == bl)
-					return bb;
-				if(p->color == rd)
-					return rr;
+				if(p->color == bl)   // check if node is black
+					return bb;   // return string "Black"
+				if(p->color == rd)  // check if node is red
+					return rr;  // return string "Red
 			}
 			else if(key > p->key)
 			{
@@ -88,7 +96,7 @@ class RBTree
 		const char *x = "Ivalid Key";
 		return x;
 	}
-		
+// -------------------------------------------------------------------------		
 	bool empty() const
 	{
 		return _size == 0;
@@ -126,14 +134,15 @@ class RBTree
 		_data = nullptr;
 		_size = 0;
 	}
-	
+
+// --- Modified Insert for Node Color -----------------------------
 	void insert(const K& k, const V& v)
 	{
 		if (_data == nullptr)
 		{
 			_data = new btnode(k, v);
 			btnode *val = _data;
-			val->color = &black;
+			val->color = &black;     // top Node is Black
 			_size++;
 		}
 		else
@@ -146,21 +155,21 @@ class RBTree
 				if (ptr->key < k)
 				{
 					// check right side
-					if (ptr->right == nullptr)
+					if (ptr->right == nullptr) 
 					{
 						// we found the leafnode
 						btnode *node = new btnode(k, v);
 						ptr->right = node;
 						node->value = v;
 						_size ++;
-						if(ptr->color == bl)
+						if(ptr->color == bl) // Check Parent Node
 						{
-							node->color = rd;
+							node->color = rd; // Assign Color
 							return;
 						}
 						else
 						{
-							node->color = &black;
+							node->color = &black; //Assign Color
 						}
 						return;
 					}
@@ -179,14 +188,14 @@ class RBTree
 						ptr->left = node;
 						node->value = v;
 						_size ++;
-						if(ptr->color == bl)
+						if(ptr->color == bl) // Check Parent Node
 						{
-							node->color = rd;
+							node->color = rd; // Assign Color
 							return;
 						}
 						else
 						{
-							node->color = bl;
+							node->color = bl; // Assign Color
 							return;
 						}
 					}
