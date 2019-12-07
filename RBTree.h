@@ -1,4 +1,4 @@
-?*
+/*
   Red-Black-Tree Challenge
   Eric Rizk
 */
